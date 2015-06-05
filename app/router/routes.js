@@ -67,6 +67,8 @@ import FaqMerchantsPartners from '../pages/faq/merchants/partners/faq-merchants-
 import FaqMerchantsReferrals from '../pages/faq/merchants/referrals/faq-merchants-referrals';
 import FaqMerchantsSecurity from '../pages/faq/merchants/security/faq-merchants-security';
 import FaqMerchantsSigningUp from '../pages/faq/merchants/signing-up/faq-merchants-signing-up';
+import FaqProDashboard from '../pages/faq/pro-dashboard/setup/faq-pro-dashboard-setup';
+import FaqProDashboardMandateCreation from '../pages/faq/pro-dashboard/mandate-creation/faq-pro-dashboard-mandate-creation';
 
 import Stories from '../pages/stories/stories';
 import StoriesHasBeanCoffee from '../pages/stories/stories/has-bean-coffee';
@@ -553,6 +555,18 @@ export const config = Immutable.fromJS([
   [FaqMerchantsReferrals, { name: 'faq_merchants_referrals', category: 'faq.merchants' }, {
       'en-GB': {
         path: '/faq/merchants/referrals',
+      },
+    },
+  ],
+  [FaqProDashboard, { name: 'faq_pro_dashboard', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro',
+      },
+    },
+  ],
+  [FaqProDashboardMandateCreation, { name: 'faq_pro_dashboard_mandate_creation', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/creation-mandat',
       },
     },
   ],

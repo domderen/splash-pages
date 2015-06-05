@@ -126,6 +126,16 @@ export default {
     nav_title: 'Inscription',
     description: '',
   },
+  faq_pro_dashboard: {
+    title: 'FAQ - Le Tableau de bord Pro sans intégration',
+    nav_title: 'Mise en place',
+    description: '',
+  },
+  faq_pro_dashboard_mandate_creation: {
+    title: 'FAQ - Créer un mandat',
+    nav_title: 'Création de mandat',
+    description: '',
+  },
   home: {
     title: 'Le prélèvement high-tech en Europe',
     nav_title: 'GoCardless',

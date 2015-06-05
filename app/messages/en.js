@@ -176,7 +176,7 @@ export default {
     title: 'FAQ for merchants - Signing up',
     nav_title: 'Signing up',
     description: '',
-  },
+  },  
   features_api: {
     title: 'GoCardless API: Integrate Direct Debit into your website & app',
     nav_title: 'API',
