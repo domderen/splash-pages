@@ -129,6 +129,12 @@ class Header extends React.Component {
                          id='track-nav-faq' className='u-padding-Vxs u-padding-Hm u-block' />
                      </IfLinkExists>
                     </li>
+                    <li className='u-text-semi'>
+                     <IfLinkExists to='faq_pro_dashboard'>
+                       <Link to='faq_pro_dashboard' pointer='faq_pro_dashboard.link_title'
+                         id='track-nav-faq-pro-dashboard' className='u-padding-Vxs u-padding-Hm u-block' />
+                     </IfLinkExists>
+                    </li>
                     <hr className='u-margin-Vs' />
                     <li>
                       <IfLinkExists to='about'>

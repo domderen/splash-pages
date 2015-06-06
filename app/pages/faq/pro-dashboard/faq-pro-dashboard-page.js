@@ -34,6 +34,12 @@ export default class FaqProDashboardPage extends React.Component {
 
     return (
       <Page isInverted={false}>
+        <FaqHeader>
+          <p className='u-text-heading-light u-text-m u-color-invert u-padding-Vs'>
+            <Message pointer='faq_pro_dashboard.title' />
+          </p>
+        </FaqHeader>
+
         <div className='site-container u-padding-Vxxl grid'>
           <div className='u-padding-Vxl'>
             <div className='grid__cell u-size-4of12'>

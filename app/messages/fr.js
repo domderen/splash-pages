@@ -127,8 +127,9 @@ export default {
     description: '',
   },
   faq_pro_dashboard: {
-    title: 'FAQ - Le Tableau de bord Pro sans intégration',
+    title: 'Utiliser GoCardless sans intégration',
     nav_title: 'Mise en place',
+    link_title: 'Guide tableau de bord',
     description: '',
   },
   faq_pro_dashboard_mandate_creation: {

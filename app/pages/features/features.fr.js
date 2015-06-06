@@ -305,6 +305,7 @@ export default class FeaturesFr extends React.Component {
                         className='basic-page__dashboard-image' alt='Suivi du statut des paiements' />
                     </div>
                   </Tabs>
+                  <Link to='faq_pro_dashboard' id='track-cta-contact-sales' className='btn btn--hollow u-margin-Tm'>Guide d'utilisation</Link>
                 </div>
               </div>
             </div>
