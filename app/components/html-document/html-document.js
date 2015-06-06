@@ -15,16 +15,16 @@ import { buildSchemaDotOrgForOrganization } from '../../helpers/schema-dot-org/s
 import { PropTypes } from '../../helpers/prop-types/prop-types';
 
 function relAlternateLinks(root, locales) {
-  var defaultPath = locales[defaultLocale].path;
+  var defaultPath = locales[defaultLocale];
 
   var alternates = Object.keys(locales).map(function(locale) {
     var localePath = locales[locale].path;
     return <link rel='alternate' hrefLang={locale} href={ root + localePath } key={locale} />;
   });
 
-  if (defaultPath) {
+  if (defaultPath && defaultPath.path) {
     alternates.unshift(
-      <link rel='alternate' href={root + defaultPath} hrefLang='x-default' key='x-default' />
+      <link rel='alternate' href={root + defaultPath.path} hrefLang='x-default' key='x-default' />
     );
   }
 

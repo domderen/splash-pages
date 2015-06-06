@@ -16,7 +16,8 @@ export default class FaqSidebar extends React.Component {
           <hr className='u-size-11of12' />
           <p className='para u-padding-Txs'>
             <Message pointer='faq.sidebar' />&nbsp;
-            <Message pointer='phone_local' />
+            <Message pointer='phone_local' /><br/>
+            <Message pointer='email' />
           </p>
         </div>
       </div>

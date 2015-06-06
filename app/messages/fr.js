@@ -78,7 +78,7 @@ export default {
   },
   faq: {
     title: 'Foire aux questions',
-    sidebar: 'Vous avez une question? Appelez-nous',
+    sidebar: 'Vous avez une question? Appelez-nous au',
   },
   faq_merchants: {
     title: 'FAQ Commerçants',
@@ -134,6 +134,36 @@ export default {
   faq_pro_dashboard_mandate_creation: {
     title: 'FAQ - Créer un mandat',
     nav_title: 'Création de mandat',
+    description: '',
+  },
+  faq_pro_dashboard_mandate_export: {
+    title: 'FAQ - Exporter un mandat',
+    nav_title: 'Export de mandat',
+    description: '',
+  },
+  faq_pro_dashboard_payment_creation: {
+    title: 'FAQ - Créer un paiement',
+    nav_title: 'Création de paiement',
+    description: '',
+  },
+  faq_pro_dashboard_subscription_creation: {
+    title: 'FAQ - Créer un abonnement',
+    nav_title: 'Création d\'abonnement',
+    description: '',
+  },
+  faq_pro_dashboard_payment_refund: {
+    title: 'FAQ - Rembourser un paiement',
+    nav_title: 'Remboursement de paiement',
+    description: '',
+  },
+  faq_pro_dashboard_payment_tracking: {
+    title: 'FAQ - Suivi de vos paiements',
+    nav_title: 'Suivi de vos paiements',
+    description: '',
+  },
+  faq_pro_dashboard_payout_tracking: {
+    title: 'FAQ - Suivi de vos virements',
+    nav_title: 'Suivi de vos virements',
     description: '',
   },
   home: {

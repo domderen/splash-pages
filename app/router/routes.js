@@ -69,6 +69,12 @@ import FaqMerchantsSecurity from '../pages/faq/merchants/security/faq-merchants-
 import FaqMerchantsSigningUp from '../pages/faq/merchants/signing-up/faq-merchants-signing-up';
 import FaqProDashboard from '../pages/faq/pro-dashboard/setup/faq-pro-dashboard-setup';
 import FaqProDashboardMandateCreation from '../pages/faq/pro-dashboard/mandate-creation/faq-pro-dashboard-mandate-creation';
+import FaqProDashboardMandateExport from '../pages/faq/pro-dashboard/mandate-export/faq-pro-dashboard-mandate-export';
+import FaqProDashboardPaymentCreation from '../pages/faq/pro-dashboard/payment-creation/faq-pro-dashboard-payment-creation';
+import FaqProDashboardSubscriptionCreation from '../pages/faq/pro-dashboard/subscription-creation/faq-pro-dashboard-subscription-creation';
+import FaqProDashboardPaymentRefund from '../pages/faq/pro-dashboard/payment-refund/faq-pro-dashboard-payment-refund';
+import FaqProDashboardPaymentTracking from '../pages/faq/pro-dashboard/payment-tracking/faq-pro-dashboard-payment-tracking';
+import FaqProDashboardPayoutTracking from '../pages/faq/pro-dashboard/payout-tracking/faq-pro-dashboard-payout-tracking';
 
 import Stories from '../pages/stories/stories';
 import StoriesHasBeanCoffee from '../pages/stories/stories/has-bean-coffee';
@@ -567,6 +573,42 @@ export const config = Immutable.fromJS([
   [FaqProDashboardMandateCreation, { name: 'faq_pro_dashboard_mandate_creation', category: 'faq.pro_dashboard' }, {
       fr: {
         path: '/faq/tableau-de-bord-pro/creation-mandat',
+      },
+    },
+  ],
+  [FaqProDashboardMandateExport, { name: 'faq_pro_dashboard_mandate_export', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/export-mandat',
+      },
+    },
+  ],
+  [FaqProDashboardPaymentCreation, { name: 'faq_pro_dashboard_payment_creation', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/creation-paiement',
+      },
+    },
+  ],
+  [FaqProDashboardSubscriptionCreation, { name: 'faq_pro_dashboard_subscription_creation', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/creation-abonnement',
+      },
+    },
+  ],
+  [FaqProDashboardPaymentRefund, { name: 'faq_pro_dashboard_payment_refund', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/remboursement-paiement',
+      },
+    },
+  ],
+  [FaqProDashboardPaymentTracking, { name: 'faq_pro_dashboard_payment_tracking', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/suivi-paiements',
+      },
+    },
+  ],
+  [FaqProDashboardPayoutTracking, { name: 'faq_pro_dashboard_payout_tracking', category: 'faq.pro_dashboard' }, {
+      fr: {
+        path: '/faq/tableau-de-bord-pro/suivi-virements',
       },
     },
   ],
