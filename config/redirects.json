@@ -1,4 +1,6 @@
 {
+  // List of redirects for Amazon S3 configuration.
+  // WHAT: Is this somehow generated or do you maintain it manually?
   "/basic/api/index.html": "/features/api",
   "/basic/index.html": "/features",
   "/benefits/index.html": "/features",

@@ -1,3 +1,6 @@
+/**
+ * This is main application component, the one that will always be rendered as wrapper around RouteHandler.
+ */
 import React from 'react';
 import { PropTypes } from '../../helpers/prop-types/prop-types';
 import { getMessage } from '../intl/intl';

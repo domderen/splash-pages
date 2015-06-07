@@ -1,3 +1,4 @@
+// Defines webpack development variables.
 export default {
   sitePort: '4000',
   backendPort: '4412',

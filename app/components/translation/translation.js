@@ -9,6 +9,9 @@ function hasLocale(allowedLocales, currentLocale) {
   return any(allowedLocales, (locale) => currentLocale === locale);
 }
 
+/**
+ * Checks if any of the translation locales is the one defined for this route.
+ */
 function validateLocale(translationLocales, locales, routeLocales, routeName) {
   const localesAllowed = any(translationLocales, partial(hasLocale, routeLocales));
 
@@ -43,10 +46,14 @@ export default class Translation extends React.Component {
     const locales = flatten([this.props.locales]);
     const exclude = flatten([this.props.exclude]);
     const { currentLocale, routeLocales, routeName } = this.context;
+    // Gets the list of currently available locales with country codes.
     const translationLocales = expandLangLocales(locales, routeLocales);
+    // Validates if at least one locale from translationLocales is suitable for this route.
     validateLocale(translationLocales, locales, routeLocales, routeName);
 
+    // Checks if current locale was explicity exluded.
     const isExcluded = hasLocale(exclude, currentLocale);
+    // Checks if the component should be rendered.
     const isVisible = !isExcluded && hasLocale(translationLocales, currentLocale);
 
     if (!isVisible) { return null; }

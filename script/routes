@@ -1,6 +1,9 @@
 #!/usr/bin/env babel-node
 
+// Takes the list of all available locales inside the application.
 import availableLocales from '../config/available-locales';
+// Takes all route paths defined inside the application.
 import { getAllPaths } from '../app/router/route-helpers';
 
+// Displays on console a list of all routes in the application, including all intl paths, sorted in the alphabetical order.
 console.log(getAllPaths(availableLocales).map((filename) => `${filename}`).sort().join('\n'));

@@ -1,6 +1,8 @@
 #!/bin/bash
 # Usage: script/test
 
+# Quit on errors.
 set -e errexit
 
+# Runs Jasmine unit tests, with configuration taken from jasmine.json file.
 node_modules/.bin/jasmine JASMINE_CONFIG_PATH=app/helpers/specs/jasmine.json

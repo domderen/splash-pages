@@ -1,6 +1,8 @@
 #!/bin/bash
 # Usage: script/lint
 
+# Quit on errors.
 set -e errexit
 
+# Runs eslint validation on the whole project.
 node_modules/.bin/eslint .

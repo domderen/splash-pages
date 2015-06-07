@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Defines port environment variable to be used for express server.
 PORT='4413'
 
 # check if something is already on our port
@@ -9,13 +10,18 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
+# Quit on errors.
 set -e errexit
 ulimit -n 10240
 
+# Cleans dist directory.
 rm -rf dist
+# Runs webpack with production configuration.
 ANIMATIONS_DISABLED=$ANIMATIONS_DISABLED node_modules/.bin/webpack --stats --progress --config ./webpack/prod.config.js
 
+# Defines port environment variable to be used for express server.
 PORT=$PORT node ./index.js &
+# Gets the server PID to kill it later.
 SERVER_PID=$!
 
 # from this point on if something goes wrong we don't want to immediately exit
@@ -25,15 +31,21 @@ set +e errexit
 # wait for the server to start up
 while ! echo exit | nc localhost $PORT; do sleep 1; done
 
+# Runs a script that generates all HTML files for the application in the directory structure matching
+# router configuration. This allows the output to be hosted on static files servers like Amazon S3.
 ./script/dump-html "http://localhost:$PORT" 'dist'
+# Gets the HTML dump exit code.
 DUMP_EXIT=$?
 
+# We stop the express server.
 kill $SERVER_PID
 
 set -e errexit
 
+# Move all public static files, inside the dist directory, if HTML dump was successful.
 if [ $DUMP_EXIT -eq 0 ]; then
   cp -R public/* dist
+# Otherwise exit with the same exit code as HTML dump did.
 else
   exit $DUMP_EXIT
 fi

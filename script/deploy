@@ -1,6 +1,7 @@
 #!/bin/bash
 # Usage: NODE_ENV=production AWS_S3_BUCKET=staging.gocardless.com ./script/deploy
 
+# Quit on errors.
 set -e errexit
 
 trap "exit 1" TERM

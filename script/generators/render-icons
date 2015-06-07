@@ -9,6 +9,13 @@ var converter = new HTMLtoJSX({
   createClass: false,
 });
 
+/**
+ * Renders SVG icon as the react component file content.
+ * Allows passing props to the svg icon component.
+ * @param  {String} className Name of the React component class.
+ * @param  {String} svgIcon   SVG content that will be used inside the component.
+ * @return {String}           New class definition file content.
+ */
 function renderIcon(className, svgIcon) {
   var output = converter.convert(svgIcon);
   output = output.replace(/<svg /, '<svg {...this.props} ');
@@ -34,29 +41,45 @@ function renderIcon(className, svgIcon) {
   `.replace(/\n  /g, '\n').replace(/^\s*[\r\n]/gm, '\n').replace(/\t/g, '  ') + '\n';
 }
 
+/**
+ * Takes all svg icons located in /public/images/icons/*.svg,
+ * and saves them as react component files at /app/icons/svg.
+ * @return {[type]} [description]
+ */
 function processSvg() {
   var base = './public/images/icons/';
   glob(base + '*.svg', function(err, icons) {
     if (err) { throw err; }
     console.log('Rendering ' + icons.length + ' icons.');
     icons.forEach(function(icon) {
+      // Reads the content of each icon file.
       var iconData = fs.readFileSync(icon).toString();
+      // Removes the -icon suffix from each file name, and removes the base content path of the filename
+      // (eg. ./public/images/icons/customer-setup-icon.svg => customer-setup).
       var classBase = icon.replace(/(\-icon)?\.svg/, '').substr(base.length);
 
+      // Takes file name and replaces it to camel cased string (eg. customer-setup => customerSetup).
       var className = classBase.replace(/-[A-Za-z]/g, function(match) {
         return match.toUpperCase().substr(1);
       });
 
+      // Changes the className to start with upper case letter (eg. customerSetup => CustomerSetup).
       className = className.charAt(0).toUpperCase() + className.slice(1);
+      // Renders new icon as the react component file.
       var newIcon = renderIcon(className + 'Icon', iconData);
 
+      // Saves react component class.
       fs.writeFileSync('./app/icons/svg/' + classBase + '.js', newIcon);
     });
   });
 }
 
+/**
+ * Verifies if all generated icons are possible to be "required", to check if all files were properly generated,
+ * as JS classes. Throws errors if generation was not successful.
+ */
 function checkSvg() {
-  glob('./app/icons/svg/*.js', function(err, icons){
+  glob('./app/icons/svg/*.js', function(err, icons) {
     if (err) { throw err; }
 
     console.log(`Verifying ${icons.length} icons`);

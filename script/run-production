@@ -1,6 +1,7 @@
 #!/bin/bash
 # Usage: script/run-production
 
+# Quit on errors.
 set -e errexit
 
 ulimit -n 10240

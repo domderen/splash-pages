@@ -1,17 +1,23 @@
 #!/bin/bash
 # Usage: script/e2e-debug app/pages/not-found/not-found.e2e.js
 
+# First parameter defines E2E scenario to run.
 SPECS=$1
 
+# Defines the port where to look for running application.
 PORT="4402"
 
+# Checks if development server is running.
 curl --silent --max-time 1 --connect-timeout 1 "http://localhost:"$PORT"/" > /dev/null
 
+# If it is not running, print error message, and exit with exit code 2.
 if [ $? -ne 0 ]; then
    echo "'npm start' needs to be running to compile assets for this test script"
    exit 2
 fi
 
+# Quit on errors.
 set -e errexit
 
+# Run protractor with protractor config file, and specified scenario.
 PORT=$PORT ./node_modules/.bin/protractor config/protractor.config.js --specs $SPECS

@@ -4,20 +4,29 @@ import { fetchPage, writePage } from '../app/static-build/builder';
 import availableLocales from '../config/available-locales';
 import { getAllPaths } from '../app/router/route-helpers';
 
+// Get argument parameters.
 const [bin, script, serverUrl, outDir] = process.argv;
 
+// If required parameters are missing display error message, and quit.
 if (!serverUrl || !outDir) {
   console.error(`Usage: ${bin} ${script} host directory`);
   process.exit(1);
 }
 
+// Fetches page from the URL on which it is served, and saves it in the output directory.
+// Logs errors if any occur.
 const processPage = function(pagePath) {
   return fetchPage(serverUrl, pagePath)
     .then(writePage.bind(null, outDir))
     .catch(console.error.bind(console));
 };
 
-Promise.all(getAllPaths(availableLocales).map(processPage)).then(function(filenames) {
+// Takes all routes defined in the application, including all locale paths, and generates and saves the HTML content for this file.
+Promise.all(getAllPaths(availableLocales).map(processPage))
+// Next logs all paths that were generated.
+.then(function(filenames) {
   console.log('Completed static html dump:');
   console.log(filenames.sort().map((filename) => `  ${filename}`).join('\n'));
-}).catch(console.error.bind(console));
+})
+// If any errors occurred, log them in the console.
+.catch(console.error.bind(console));

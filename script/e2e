@@ -10,11 +10,15 @@ if [ $? -eq 0 ]; then
   exit 1
 fi
 
+# Quit on errors.
 set -e errexit
 
+# Build production application to dist/ directory.
 ANIMATIONS_DISABLED=true ./script/build-prod
 
+# Serve production ready application with a static http-server on a specific port. Pipe all server output to log file.
 ./node_modules/.bin/serve -p $PORT dist/ &>.e2e_server_log &
+# Gets server pid to kill it later.
 SERVER_PID=$!
 
 # wait for the server to be up and running
@@ -24,10 +28,14 @@ while ! echo exit | nc localhost $PORT; do sleep 1; done
 # so we can kill the server process
 set +e errexit
 
+# Runs protractor with specific config object.
 PORT=$PORT ./node_modules/.bin/protractor config/protractor.config.js
 
+# Gets protractor exit code.
 PROTRACTOR_EXIT=$?
 
+# Kills static content server.
 kill $SERVER_PID
 
+# Exits with the exit code returned by protractor.
 exit $PROTRACTOR_EXIT

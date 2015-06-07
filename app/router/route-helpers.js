@@ -22,12 +22,20 @@ function pathWithLocale(path, locale) {
   return localePath ? `/${localePath}/` : '/';
 }
 
+/**
+ * Check if pages object is not smaller than 1.
+ * @param  {Object} pages Pages object which size property will be checked.
+ * @return {Undefined}    Throws error if pages size is smaller than 1.
+ */
 function validatePages(pages) {
   if (pages.size < 1) {
     throw new TypeError('pages must not be empty');
   }
 }
 
+/**
+ * Throws error if provided locale is not available in the list of all locales.
+ */
 function validateLocale(locale, availableLocales) {
   if (!includes(availableLocales, locale)) {
     throw new TypeError(`Locale not allowed: ${locale} [${availableLocales.join(', ')}]`);
@@ -35,7 +43,9 @@ function validateLocale(locale, availableLocales) {
 }
 
 export function flattenPagesForLocale(pages, locale, availableLocales) {
+  // Check if pages object is not smaller than 1.
   validatePages(pages);
+  // Throws error if provided locale is not available in the list of all locales.
   validateLocale(locale, availableLocales);
 
   function setLocaleConfigPath(page) {
@@ -172,6 +182,9 @@ export function expandConfig(givenConfig, availableLocales) {
                     .map(setLocalePaths);
 }
 
+/**
+ * Gets the localeConfig from routes configuration array, for a given route name.
+ */
 export function getLocalesForRouteName(routeName, availableLocales, givenConfig=config) {
   const expanded = expandConfig(givenConfig, availableLocales);
   const foundPage = expanded.find((page) => page.getIn(['routeConfig', 'name']) === routeName);
@@ -200,9 +213,19 @@ export function filterRouteByCategory(routeCategory, locale, availableLocales, g
     .toJS();
 }
 
+/**
+ * Generates React-Router configuration component, for all routes matching given language.
+ * @param  {String} locale           Language-country locale code.
+ * @param  {Array} availableLocales  List of all available languages.
+ * @param  {Array} givenConfig       Configuration object with all paths available.
+ * @return {Component}               Returns react-router configuration component.
+ */
 export function getRoutes(locale, availableLocales, givenConfig=config) {
+  // Transform whole config object, to object with all language codes, easier for manipulation.
   const expandedPages = givenConfig.map((page) => transformConfigItems(page, availableLocales));
+  // Returns only paths for a given locale.
   const flattenedRoutes = flattenPagesForLocale(expandedPages, locale, availableLocales);
+  // Assumes that the first route is a home page.
   const homePage = flattenedRoutes.first();
 
   return (
