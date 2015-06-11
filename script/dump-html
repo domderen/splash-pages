@@ -1,23 +1,24 @@
 #!/usr/bin/env babel-node
 
-import { fetchPage, writePage } from '../app/static-build/builder';
+import { writePage } from '../app/static-build/builder';
 import availableLocales from '../config/available-locales';
 import { getAllPaths } from '../app/router/route-helpers';
+import { render } from '../server/render';
 
-const [bin, script, serverUrl, outDir] = process.argv;
+const [bin, script, outDir] = process.argv;
 
-if (!serverUrl || !outDir) {
-  console.error(`Usage: ${bin} ${script} host directory`);
+if (!outDir) {
+  console.error(`Usage: ${bin} ${script} directory`);
   process.exit(1);
 }
 
 const processPage = function(pagePath) {
-  return fetchPage(serverUrl, pagePath)
+  return render(pagePath)
     .then(writePage.bind(null, outDir))
     .catch(console.error.bind(console));
 };
 
 Promise.all(getAllPaths(availableLocales).map(processPage)).then(function(filenames) {
   console.log('Completed static html dump:');
-  console.log(filenames.sort().map((filename) => `  ${filename}`).join('\n'));
+  console.log(filenames.sort().map((filename) => ` ${filename}`).join('\n'));
 }).catch(console.error.bind(console));

@@ -1,34 +1,17 @@
 #!/bin/sh
 
-PORT='4413'
-
-# check if something is already on our port
-echo exit | nc localhost $PORT
-if [ $? -eq 0 ]; then
-  echo "something is already running on $PORT"
-  exit 1
-fi
-
 set -e errexit
 ulimit -n 10240
 
 rm -rf dist
 ANIMATIONS_DISABLED=$ANIMATIONS_DISABLED node_modules/.bin/webpack --stats --progress --config ./webpack/prod.config.js
 
-PORT=$PORT node ./index.js &
-SERVER_PID=$!
-
 # from this point on if something goes wrong we don't want to immediately exit
 # because we have to make sure we tidy up the server properly and kill the process
 set +e errexit
 
-# wait for the server to start up
-while ! echo exit | nc localhost $PORT; do sleep 1; done
-
-./script/dump-html "http://localhost:$PORT" 'dist'
+./script/dump-html 'dist'
 DUMP_EXIT=$?
-
-kill $SERVER_PID
 
 set -e errexit
 

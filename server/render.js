@@ -28,70 +28,91 @@ function normalizeUrl(urlStr) {
   return url.format(parsedUrl);
 }
 
-export function render(req, res, next) {
+export function render(requestUrl) {
+  return new Promise(function(resolve, reject) {
+    const reqUrl = normalizeUrl(requestUrl);
+    const reqPath = url.parse(reqUrl).path;
+    const reqLocale = pathToLocale(reqPath, availableLocales);
+    const routes = getRoutes(reqLocale.normalized, availableLocales);
+    const messages = cloneDeep(localeMessages[reqLocale.normalized]);
+
+    const availableCountryNames = availableLocales.reduce(function(memo, locale) {
+      memo[locale] = getMessage(localeMessages[locale], 'country');
+      return memo;
+    }, {});
+
+    function appProps(props) {
+      return assign({
+        currentLocale: reqLocale.normalized,
+        language: reqLocale.language,
+        messages: messages,
+        formats: formats,
+        config: config,
+        availableLocales: availableLocales,
+        availableCountryNames: availableCountryNames,
+      }, props);
+    }
+
+    const router = Router.create({
+      onAbort: function(abortReason) {
+        reject(abortReason);
+      },
+      onError: function(err) {
+        reject(err);
+      },
+      routes: routes,
+      location: reqUrl,
+    });
+
+    router.run(function(Handler, state) {
+      const routeName = result(findLast(state.routes.slice(), 'name'), 'name');
+      const routeLocales = Object.keys(getLocalesForRouteName(routeName, availableLocales) || {});
+      const stateProps = {
+        routeName: routeName || 'not_found',
+        pathname: state.pathname,
+        routeLocales: routeLocales,
+      };
+
+      const markup = React.renderToString(<Handler {...appProps(stateProps)} />);
+      const webpackUrls = getWebpackPaths();
+
+      // The application component is rendered to static markup
+      // and sent as response.
+      const html = React.renderToStaticMarkup(
+        <HtmlDocument
+          markup={markup}
+          script={webpackUrls.script}
+          css={webpackUrls.css}
+          router={router}
+          dataRender={appProps(stateProps)}
+          {...appProps(stateProps)} />
+      );
+      const doctype = '<!DOCTYPE html>';
+      resolve([requestUrl, doctype + html]);
+    });
+  });
+}
+
+/**
+ * Middle ware used to serve HTML content rendered based on the react-router path.
+ * Content is rendered in form of the index.html page created as a react component.
+ * @param  {Object}   req  Express request object.
+ * @param  {Object}   res  Express response object.
+ * @param  {Function} next Callback passing control to the next handler.
+ */
+export function renderFromRequest(req, res, next) {
+  // Checking if request is for HTML content.
   const isHtml = req.headers.accept && req.accepts('html');
 
   // Skip not found assets
+  // If not request for HTML content, pass control to the next handler.
   if (!isHtml) { return next(); }
 
-  const reqUrl = normalizeUrl(req.url);
-  const reqPath = url.parse(reqUrl).path;
-  const reqLocale = pathToLocale(reqPath, availableLocales);
-  const routes = getRoutes(reqLocale.normalized, availableLocales);
-  const messages = cloneDeep(localeMessages[reqLocale.normalized]);
-
-  const availableCountryNames = availableLocales.reduce(function(memo, locale) {
-    memo[locale] = getMessage(localeMessages[locale], 'country');
-    return memo;
-  }, {});
-
-  function appProps(props) {
-    return assign({
-      currentLocale: reqLocale.normalized,
-      language: reqLocale.language,
-      messages: messages,
-      formats: formats,
-      config: config,
-      availableLocales: availableLocales,
-      availableCountryNames: availableCountryNames,
-    }, props);
-  }
-
-  const router = Router.create({
-    onAbort: function(abortReason) {
-      next(abortReason);
-    },
-    onError: function(err) {
-      next(err);
-    },
-    routes: routes,
-    location: reqUrl,
-  });
-
-  router.run(function(Handler, state) {
-    const routeName = result(findLast(state.routes.slice(), 'name'), 'name');
-    const routeLocales = Object.keys(getLocalesForRouteName(routeName, availableLocales) || {});
-    const stateProps = {
-      routeName: routeName || 'not_found',
-      pathname: state.pathname,
-      routeLocales: routeLocales,
-    };
-
-    const markup = React.renderToString(<Handler {...appProps(stateProps)} />);
-    const webpackUrls = getWebpackPaths();
-
-    // The application component is rendered to static markup
-    // and sent as response.
-    const html = React.renderToStaticMarkup(
-      <HtmlDocument
-        markup={markup}
-        script={webpackUrls.script}
-        css={webpackUrls.css}
-        router={router}
-        dataRender={appProps(stateProps)}
-        {...appProps(stateProps)} />
-    );
-    const doctype = '<!DOCTYPE html>';
-    res.send(doctype + html);
+  render(req.url)
+  .then(([, htmlOutput]) => {
+    res.send(htmlOutput);
+  })
+  .catch(errorReason => {
+    next(errorReason);
   });
 }

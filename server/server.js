@@ -9,7 +9,7 @@ import devEnv from '../config/dev-environment';
 
 import favicon from 'serve-favicon';
 
-import { render } from './render';
+import { renderFromRequest } from './render';
 import availableLocales from '../config/available-locales';
 
 function normalisePort(val) {
@@ -30,7 +30,7 @@ app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(express.static(path.join(__dirname, '..', 'app')));
 
-app.use(render);
+app.use(renderFromRequest);
 
 app.use(compression());
 app.set('port', normalisePort(process.env.PORT || devEnv.backendPort));
