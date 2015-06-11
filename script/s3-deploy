@@ -9,7 +9,6 @@ var path = require('path');
 
 var mime = require('mime');
 var glob = require('glob');
-var mkdirp = require('mkdirp');
 var AWS = require('aws-sdk');
 var assign = require('lodash/object/assign');
 var flatten = require('lodash/array/flatten');
@@ -180,28 +179,6 @@ function deploy(files, AWSOptions, s3Options) {
       sync(client, fileObject, s3Options);
     });
   });
-}
-
-function writeRedirectFiles(targetRedirects) {
-  Object.keys(targetRedirects).forEach(function(redirectFrom) {
-    var outdir = path.join(process.cwd(), argv.cwd);
-    var outfile = path.join(outdir, redirectFrom);
-    var target = targetRedirects[redirectFrom];
-    mkdirp.sync(path.dirname(outfile));
-    fs.writeFileSync(outfile,
-      '<!doctype html>' +
-      '<html>' +
-      '<meta charset="utf-8">' +
-      '<meta http-equiv="refresh" content="0;url=' + target + '">' +
-      '</html>'
-    );
-  });
-}
-
-if (redirects) {
-  console.log('Creating redirect files');
-
-  writeRedirectFiles(redirects);
 }
 
 var globbedFiles = flatten(argv._

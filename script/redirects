@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+
+var mkdirp = require('mkdirp');
+var argv = require('minimist')(process.argv.slice(2));
+
+if (!argv.redirects) {
+  throw new Error('now redirects');
+}
+
+var redirects = require(path.join(process.cwd(), argv.redirects));
+
+Object.keys(redirects).forEach(function(redirectFrom) {
+  var outdir = path.join(process.cwd(), argv.cwd);
+  var outfile = path.join(outdir, redirectFrom);
+  var target = redirects[redirectFrom];
+  mkdirp.sync(path.dirname(outfile));
+  fs.writeFileSync(outfile,
+    '<!doctype html>' +
+    '<html>' +
+    '<meta charset="utf-8">' +
+    '<meta http-equiv="refresh" content="0;url=' + target + '">' +
+    '</html>'
+  );
+});

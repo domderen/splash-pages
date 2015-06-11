@@ -24,6 +24,8 @@ CWD="./dist/"
 
 ulimit -n 4096
 
+./script/redirects --cwd $CWD --redirects config/redirects.json
+
 AWS_SECRET_ACCESS_KEY=$GC_AWS_SECRET AWS_ACCESS_KEY_ID=$GC_AWS_ACCESS_KEY \
   ./script/s3-deploy $CWD** --cwd $CWD \
   --region eu-west-1 --bucket $AWS_S3_BUCKET \

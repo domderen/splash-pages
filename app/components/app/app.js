@@ -35,7 +35,6 @@ class App extends React.Component {
   static propTypes = {
     currentLocale: PropTypes.locale,
     messages: PropTypes.object.isRequired,
-    formats: PropTypes.object.isRequired,
     routeName: PropTypes.string.isRequired,
     availableLocales: PropTypes.array.isRequired,
     availableCountryNames: PropTypes.object.isRequired,
@@ -51,7 +50,6 @@ class App extends React.Component {
   static childContextTypes = {
     currentLocale: PropTypes.locale,
     messages: PropTypes.object.isRequired,
-    formats: PropTypes.object.isRequired,
     routeName: PropTypes.string.isRequired,
     availableLocales: PropTypes.array.isRequired,
     availableCountryNames: PropTypes.object.isRequired,
@@ -81,13 +79,12 @@ class App extends React.Component {
   }
 
   getChildContext() {
-    const { currentLocale, messages, formats, routeName, availableLocales,
+    const { currentLocale, messages, routeName, availableLocales,
             availableCountryNames, routeLocales, config, pathname } = this.props;
 
     return {
       currentLocale: currentLocale,
       messages: messages,
-      formats: formats,
       routeName: routeName,
       availableLocales: availableLocales,
       availableCountryNames: availableCountryNames,

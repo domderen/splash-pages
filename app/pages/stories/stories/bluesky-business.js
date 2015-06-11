@@ -31,7 +31,7 @@ export default class StoriesBlueskyBusiness extends React.Component {
         person='Emma Mills' position='Bluesky Business'>
           Our cashflow and business have been transformed since we started using GoCardless.
           Within a month our average debtor days had halved and 70% of our customers were paying on time.
-          We&quo;re wasting less time chasing payments, and can really focus on growing our business
+          We’re wasting less time chasing payments, and can really focus on growing our business
         </StoryBigQuote>
         <StoryQuote tag='GoCardless gave us the automated Direct Debit solution we needed'>
           <p className='para u-margin-Tn'>
@@ -42,7 +42,7 @@ export default class StoriesBlueskyBusiness extends React.Component {
         </StoryQuote>
         <StoryQuote tag='Our cashflow and business have been transformed since we started using GoCardless'>
           <p className='para u-margin-Tn'>
-            Within a month of switching to GoCardless, 70% of Bluesky'&quo;s clients signed up to pay by Direct Debit.
+            Within a month of switching to GoCardless, 70% of Bluesky’s clients signed up to pay by Direct Debit.
           </p>
           <p className='para'>
             “Our cashflow and business have been transformed since we started using GoCardless.

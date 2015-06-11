@@ -29,7 +29,6 @@ module.exports = {
     ],
   },
   postcss: [autoprefixer({ browsers: ['last 2 version'] })],
-  progress: true,
   plugins: [
     new ExtractTextPlugin('[name]-[chunkhash].css'),
 

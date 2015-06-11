@@ -37,7 +37,6 @@ class HtmlDocument extends React.Component {
   static propTypes = {
     currentLocale: PropTypes.locale,
     messages: PropTypes.object.isRequired,
-    formats: PropTypes.object.isRequired,
     routeName: PropTypes.string.isRequired,
     availableLocales: PropTypes.array.isRequired,
     availableCountryNames: PropTypes.object.isRequired,
@@ -59,7 +58,6 @@ class HtmlDocument extends React.Component {
   static childContextTypes = {
     currentLocale: PropTypes.locale,
     messages: PropTypes.object.isRequired,
-    formats: PropTypes.object.isRequired,
     routeName: PropTypes.string.isRequired,
     availableLocales: PropTypes.array.isRequired,
     routeLocales: PropTypes.array.isRequired,
@@ -70,13 +68,12 @@ class HtmlDocument extends React.Component {
   };
 
   getChildContext() {
-    const { currentLocale, messages, formats, routeName, availableLocales,
+    const { currentLocale, messages, routeName, availableLocales,
             availableCountryNames, routeLocales, router, pathname, config } = this.props;
 
     return {
       currentLocale: currentLocale,
       messages: messages,
-      formats: formats,
       routeName: routeName,
       availableLocales: availableLocales,
       availableCountryNames: availableCountryNames,
@@ -145,7 +142,6 @@ class HtmlDocument extends React.Component {
           { config.googleTagManagerId &&
               <div dangerouslySetInnerHTML={{__html: GTM.replace('{TAG_ID}', config.googleTagManagerId) }} />
           }
-
         </body>
       </html>
     );

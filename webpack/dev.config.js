@@ -32,7 +32,6 @@ export default function(WEBPACK_HOST, WEBPACK_PORT) {
       ],
     },
     postcss: [autoprefixer({ browsers: ['last 2 version'] })],
-    progress: true,
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),

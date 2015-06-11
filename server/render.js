@@ -14,7 +14,6 @@ import { getRoutes, getLocalesForRouteName } from '../app/router/route-helpers';
 import localeMessages from '../config/messages';
 import availableLocales from '../config/available-locales';
 import config from '../config';
-import formats from '../config/formats';
 import { getMessage } from '../app/components/intl/intl';
 
 function getWebpackPaths() {
@@ -46,7 +45,6 @@ export function render(requestUrl) {
         currentLocale: reqLocale.normalized,
         language: reqLocale.language,
         messages: messages,
-        formats: formats,
         config: config,
         availableLocales: availableLocales,
         availableCountryNames: availableCountryNames,
